@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BDA ESA Study Guide — UE20CS936 Introduction to Big Data Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface2: #1c2333;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --accent: #58a6ff;
+  --accent2: #3fb950;
+  --accent3: #d2a8ff;
+  --accent4: #f0883e;
+  --accent5: #ff7b72;
+  --accent6: #79c0ff;
+  --code-bg: #0d1117;
+  --code-border: #21262d;
+  --serif: 'Literata', Georgia, serif;
+  --sans: 'DM Sans', -apple-system, sans-serif;
+  --mono: 'IBM Plex Mono', 'Consolas', monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--accent); color: var(--bg); }
+
+/* --- NAV SIDEBAR --- */
+#sidebar {
+  position: fixed; top: 0; left: 0;
+  width: 300px; height: 100vh;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  overflow-y: auto; z-index: 100;
+  padding: 2rem 1.25rem;
+  transform: translateX(0);
+  transition: transform 0.3s ease;
+}
+#sidebar.hidden { transform: translateX(-100%); }
+#sidebar h2 {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+#sidebar a {
+  display: block;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.85rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 6px;
+  transition: all 0.2s;
+  margin-bottom: 2px;
+}
+#sidebar a:hover, #sidebar a.active {
+  color: var(--text);
+  background: var(--surface2);
+}
+#sidebar a.section-link {
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+}
+#sidebar a.sub-link { padding-left: 1.25rem; font-size: 0.8rem; }
+#toggle-btn {
+  position: fixed; top: 1rem; left: 1rem;
+  z-index: 200; background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text); cursor: pointer;
+  width: 40px; height: 40px; border-radius: 8px;
+  display: none; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+}
+
+/* --- MAIN --- */
+main {
+  margin-left: 300px;
+  max-width: 900px;
+  padding: 3rem 3rem 6rem;
+}
+
+/* --- HEADER --- */
+.hero {
+  padding: 3rem 0 2rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 3rem;
+}
+.hero .badge {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--accent), var(--accent3));
+  color: var(--bg);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+.hero h1 {
+  font-family: var(--serif);
+  font-size: 2.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, var(--text) 0%, var(--accent6) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero p { color: var(--text-muted); font-size: 1.1rem; max-width: 650px; }
+
+/* --- SECTIONS --- */
+.section-divider {
+  display: flex; align-items: center; gap: 1rem;
+  margin: 4rem 0 2rem; position: relative;
+}
+.section-divider .num {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+h2 {
+  font-family: var(--serif);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+h3 {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--accent6);
+  margin: 2.5rem 0 0.75rem;
+  padding-top: 0.5rem;
+}
+h4 {
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent3);
+  margin: 1.5rem 0 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+p { margin-bottom: 1rem; color: var(--text); }
+strong { color: var(--accent2); font-weight: 600; }
+em { color: var(--accent4); font-style: normal; }
+
+/* --- CODE --- */
+pre {
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  overflow-x: auto;
+  margin: 1rem 0 1.5rem;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: var(--text);
+  position: relative;
+}
+pre .lang-tag {
+  position: absolute; top: 0.5rem; right: 0.75rem;
+  font-size: 0.65rem; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+code {
+  font-family: var(--mono);
+  font-size: 0.85em;
+  background: var(--surface2);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  color: var(--accent6);
+}
+pre code { background: none; padding: 0; font-size: inherit; color: inherit; }
+
+/* --- CARDS / KEY CONCEPTS --- */
+.concept-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin: 1.25rem 0;
+  border-left: 3px solid var(--accent);
+}
+.concept-card.warn { border-left-color: var(--accent4); }
+.concept-card.success { border-left-color: var(--accent2); }
+.concept-card.purple { border-left-color: var(--accent3); }
+.concept-card h5 {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+.concept-card.warn h5 { color: var(--accent4); }
+.concept-card.success h5 { color: var(--accent2); }
+.concept-card.purple h5 { color: var(--accent3); }
+
+/* --- TABLES --- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0 1.5rem;
+  font-size: 0.9rem;
+}
+th, td {
+  text-align: left;
+  padding: 0.65rem 1rem;
+  border: 1px solid var(--border);
+}
+th {
+  background: var(--surface2);
+  font-weight: 600;
+  color: var(--accent6);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+td { background: var(--surface); }
+tr:hover td { background: var(--surface2); }
+
+/* --- LISTS --- */
+ul, ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+li { margin-bottom: 0.4rem; }
+li::marker { color: var(--accent); }
+
+/* --- MCQ --- */
+.mcq {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  margin: 1rem 0;
+}
+.mcq .q { font-weight: 600; margin-bottom: 0.5rem; color: var(--text); }
+.mcq .opts { padding-left: 1.25rem; margin-bottom: 0.5rem; }
+.mcq .opts li { list-style: lower-alpha; color: var(--text-muted); margin-bottom: 0.2rem; }
+.mcq .answer {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--accent2);
+  cursor: pointer;
+  user-select: none;
+  padding: 0.3rem 0.6rem;
+  background: var(--surface2);
+  border-radius: 4px;
+  display: inline-block;
+}
+.mcq .answer .reveal { display: none; }
+.mcq .answer:hover .reveal { display: inline; }
+.mcq .answer:hover .hint { display: none; }
+
+/* --- EXAM PATTERN --- */
+.exam-pattern {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.exam-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.25rem;
+  text-align: center;
+}
+.exam-block .marks {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+.exam-block .label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 900px) {
+  #sidebar { transform: translateX(-100%); }
+  #sidebar.show { transform: translateX(0); }
+  #toggle-btn { display: flex; }
+  main { margin-left: 0; padding: 2rem 1.25rem 4rem; }
+  .hero h1 { font-size: 2rem; }
+}
+
+/* --- SCROLLBAR --- */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* --- PRINT --- */
+@media print {
+  #sidebar, #toggle-btn { display: none !important; }
+  main { margin-left: 0; max-width: 100%; }
+  body { background: #fff; color: #111; }
+  pre { border: 1px solid #ccc; }
+  .concept-card { border: 1px solid #ccc; }
+}
+</style>
+</head>
+<body>
+
+<button id="toggle-btn" onclick="document.getElementById('sidebar').classList.toggle('show')">☰</button>
+
+<nav id="sidebar">
+  <h2>📚 BDA ESA Study Guide</h2>
+  <a href="#exam-pattern" class="section-link">Exam Pattern</a>
+  <a href="#hadoop-hdfs" class="section-link">1. Hadoop & HDFS</a>
+  <a href="#hdfs-arch" class="sub-link">HDFS Architecture</a>
+  <a href="#hdfs-commands" class="sub-link">HDFS Commands</a>
+  <a href="#mapreduce" class="sub-link">MapReduce</a>
+  <a href="#yarn" class="sub-link">YARN</a>
+  <a href="#hive-sqoop" class="section-link">2. Hive & Sqoop</a>
+  <a href="#hive-arch" class="sub-link">Hive Architecture</a>
+  <a href="#hive-tables" class="sub-link">Managed vs External Tables</a>
+  <a href="#hive-file-formats" class="sub-link">File Formats (ORC/Parquet)</a>
+  <a href="#hive-partitioning" class="sub-link">Partitioning & Bucketing</a>
+  <a href="#hive-queries" class="sub-link">HiveQL Queries</a>
+  <a href="#mongodb" class="section-link">3. MongoDB & NoSQL</a>
+  <a href="#cap-theorem" class="sub-link">CAP Theorem</a>
+  <a href="#nosql-types" class="sub-link">NoSQL Database Types</a>
+  <a href="#mongo-crud" class="sub-link">MongoDB CRUD</a>
+  <a href="#pymongo" class="sub-link">PyMongo Code</a>
+  <a href="#mongo-aggregation" class="sub-link">Aggregation Pipeline</a>
+  <a href="#spark" class="section-link">4. Apache Spark</a>
+  <a href="#spark-arch" class="sub-link">Spark Architecture & DAG</a>
+  <a href="#rdd" class="sub-link">RDD Operations</a>
+  <a href="#dataframe-ops" class="sub-link">DataFrame Operations</a>
+  <a href="#spark-sql" class="sub-link">Spark SQL</a>
+  <a href="#cache-persist" class="sub-link">Cache & Persist</a>
+  <a href="#coalesce-repartition" class="sub-link">Coalesce vs Repartition</a>
+  <a href="#spark-ml" class="section-link">5. Spark ML</a>
+  <a href="#transformers" class="sub-link">Feature Transformers</a>
+  <a href="#ml-algorithms" class="sub-link">ML Algorithms</a>
+  <a href="#pipeline" class="sub-link">Pipeline & Persistence</a>
+  <a href="#ml-evaluation" class="sub-link">Model Evaluation</a>
+  <a href="#kafka" class="section-link">6. Kafka & Streaming</a>
+  <a href="#kafka-arch" class="sub-link">Kafka Architecture</a>
+  <a href="#kafka-commands" class="sub-link">Kafka Commands</a>
+  <a href="#mcq" class="section-link">7. MCQ Practice</a>
+  <a href="#past-papers" class="section-link">8. Past Paper Analysis</a>
+  <a href="#coding-template" class="section-link">9. Section C Template</a>
+  <a href="#cheatsheet" class="section-link">10. Quick Cheatsheet</a>
+</nav>
+
+<main>
+
+<!-- ====== HERO ====== -->
+<header class="hero">
+  <div class="badge">UE20CS936 · M.Tech DSML · Semester III</div>
+  <h1>Introduction to Big Data Analytics — ESA Study Guide</h1>
+  <p>A comprehensive, exam-focused study guide synthesized from all course slides, notebooks, past papers, assignments, and handson materials. Covers Hadoop/HDFS, Hive, MongoDB, Apache Spark, SparkML, and Kafka.</p>
+</header>
+
+<!-- ====== EXAM PATTERN ====== -->
+<div class="section-divider" id="exam-pattern"><span class="num">00</span></div>
+<h2>Exam Pattern</h2>
+<p>Based on analysis of 5 past ESA papers (March 2022 – June 2025), the exam consistently follows this structure:</p>
+
+<div class="exam-pattern">
+  <div class="exam-block">
+    <div class="marks">20</div>
+    <div class="label">Section A — Theory<br>(4-5 questions × 4-5 marks)</div>
+  </div>
+  <div class="exam-block">
+    <div class="marks">40</div>
+    <div class="label">Section B — Commands<br>HDFS · RDD · Hive · MongoDB</div>
+  </div>
+  <div class="exam-block">
+    <div class="marks">40</div>
+    <div class="label">Section C — Coding<br>PySpark SQL (15) + SparkML (25)</div>
+  </div>
+</div>
+
+<div class="concept-card warn">
+  <h5>⚡ Key Exam Insights</h5>
+  <ul>
+    <li><strong>Section A</strong> always asks: HDFS architecture, Spark architecture/DAG, CAP theorem, Hive architecture, YARN, Data Lake vs Data Warehouse</li>
+    <li><strong>Section B</strong> always has: 5 HDFS commands (10m), 4-5 RDD/PySpark commands (10m), Hive create/join/query (10m), MongoDB CRUD (10m)</li>
+    <li><strong>Section C</strong> always has: DataFrame queries (groupBy, filter, agg) + full ML pipeline (StringIndexer → VectorAssembler → train/test split → model → evaluate)</li>
+    <li>ML model is usually <strong>LogisticRegression</strong> (classification) or <strong>LinearRegression</strong> (regression) with accuracy/RMSE evaluation</li>
+  </ul>
+</div>
+
+<!-- ======================================================================== -->
+<!--  SECTION 1: HADOOP & HDFS                                               -->
+<!-- ======================================================================== -->
+<div class="section-divider" id="hadoop-hdfs"><span class="num">01</span></div>
+<h2>Hadoop & HDFS</h2>
+
+<h3 id="hdfs-arch">HDFS Architecture</h3>
+<p><strong>Hadoop</strong> is an open-source framework for distributed storage and processing of large datasets using clusters of commodity hardware. It has two main versions: Hadoop 1 (HDFS + MapReduce) and Hadoop 2/3 (HDFS + YARN + MapReduce).</p>
+
+<div class="concept-card">
+  <h5>🔑 Key Concept — HDFS Components</h5>
+  <p><strong>NameNode (Master):</strong> Manages the file system namespace and metadata. Stores information about which blocks belong to which file and which DataNode holds them. Single point of contact for the client.</p>
+  <p><strong>DataNode (Worker/Slave):</strong> Stores actual data blocks. Reports to NameNode with heartbeats. Each DataNode machine contains exactly <strong>one NodeManager</strong> (in YARN context).</p>
+  <p><strong>Secondary NameNode:</strong> Takes periodic snapshots of the NameNode metadata (not a failover NameNode).</p>
+  <p><strong>Default block size:</strong> 128 MB (Hadoop 2/3). <strong>Default replication factor:</strong> 3.</p>
+</div>
+
+<h3 id="hdfs-commands">HDFS Shell Commands</h3>
+<p>These are the most frequently asked commands in Section B (10 marks every paper):</p>
+
+<h4>Directory Operations</h4>
+<pre><code><span class="lang-tag">HDFS</span>
+# Create directory
+hadoop fs -mkdir /user/hadoop/InputDir
+
+# Create nested directories in single command (asked June 2025)
+hadoop fs -mkdir -p /user/hadoop/project/data/
+
+# List files and directories
+hadoop fs -ls /user/hadoop/SampleDir
+
+# List recursively with all subdirectories
+hadoop fs -ls -R /user/hadoop/SampleDir
+
+# Check disk space usage
+hadoop fs -du -s /user/hadoop/data/
+</code></pre>
+
+<h4>File Operations</h4>
+<pre><code><span class="lang-tag">HDFS</span>
+# Upload file from local to HDFS (PUT)
+hadoop fs -put localfile.txt /user/hadoop/InputDir
+
+# Upload all .txt files from local directory
+hadoop fs -put /local/XYZ/*.txt /user/hadoop/InputDir/
+
+# Copy from local (alternative syntax)
+hadoop fs -copyFromLocal localfile.txt /hdfs/path/
+
+# Download file from HDFS to local
+hadoop fs -get /hdfs/path/file.txt /local/path/
+hadoop fs -copyToLocal /hdfs/path/file.txt /local/path/
+
+# Display file content
+hadoop fs -cat /user/hadoop/file1/customers.txt
+
+# Display first 10 lines
+hadoop fs -cat /user/hadoop/reports/report.txt | head -n 10
+
+# Display first 1KB
+hadoop fs -head /user/hadoop/file.txt
+
+# Display last 1KB
+hadoop fs -tail /user/hadoop/file.txt
+
+# Browse with pager (asked June 2025)
+hadoop fs -cat /user/hadoop/file.txt | less
+</code></pre>
+
+<h4>Copy, Move & Delete</h4>
+<pre><code><span class="lang-tag">HDFS</span>
+# Copy within HDFS
+hadoop fs -cp /user/hadoop/InputDir/file1.txt /user/hadoop/OutputDir/file2.txt
+
+# Move/rename within HDFS
+hadoop fs -mv /user/hadoop/OutputDir /user/hadoop/ArchiveDir
+
+# Remove a file
+hadoop fs -rm /user/hadoop/backup/olddata.csv
+
+# Remove directory recursively
+hadoop fs -rm -r /user/hadoop/directory
+
+# Remove empty directory
+hadoop fs -rmdir /user/hadoop/XYZ
+
+# Change permissions
+hadoop fs -chmod 444 /user/hadoop/file.txt
+
+# File system check (blocks, racks)
+hdfs fsck /sales -files -blocks -locations -racks
+
+# Print Hadoop version
+hadoop version
+</code></pre>
+
+<h3 id="mapreduce">MapReduce</h3>
+<div class="concept-card">
+  <h5>🔑 MapReduce Framework</h5>
+  <p><strong>Map Phase:</strong> Takes input data splits, processes them in parallel, and produces intermediate key-value pairs.</p>
+  <p><strong>Shuffle & Sort:</strong> Groups all intermediate values by key and sorts them.</p>
+  <p><strong>Reduce Phase:</strong> Aggregates the grouped values to produce final output.</p>
+  <p><strong>Important:</strong> Reducer starts only when ALL mappers finish execution. The number of mapper tasks is NOT necessarily equal to reducer tasks.</p>
+</div>
+
+<p><strong>Word Count Example (Classic):</strong></p>
+<pre><code><span class="lang-tag">Pseudocode</span>
+# Input: "Hello World Hello"
+# MAP Phase:
+#   ("Hello", 1), ("World", 1), ("Hello", 1)
+# SHUFFLE & SORT:
+#   ("Hello", [1, 1]), ("World", [1])
+# REDUCE Phase:
+#   ("Hello", 2), ("World", 1)
+</code></pre>
+
+<h3 id="yarn">YARN (Yet Another Resource Negotiator)</h3>
+<div class="concept-card success">
+  <h5>🔑 YARN Components</h5>
+  <p><strong>ResourceManager (Master):</strong> Global resource manager. Allocates cluster resources. One per cluster.</p>
+  <p><strong>NodeManager (Worker):</strong> Runs on every DataNode. Manages containers on that node. Reports resource usage to ResourceManager.</p>
+  <p><strong>ApplicationMaster:</strong> One per application. Negotiates resources from ResourceManager and works with NodeManagers to execute tasks.</p>
+  <p><strong>Container:</strong> Unit of resource allocation (CPU, memory) on a node where tasks run.</p>
+</div>
+
+<div class="concept-card purple">
+  <h5>📝 Data Lake vs Data Warehouse (asked July 2024)</h5>
+  <table>
+    <tr><th>Data Lake</th><th>Data Warehouse</th></tr>
+    <tr><td>Stores raw, unstructured data</td><td>Stores processed, structured data</td></tr>
+    <tr><td>Schema-on-read</td><td>Schema-on-write</td></tr>
+    <tr><td>Cheaper (commodity storage)</td><td>More expensive (specialized hardware)</td></tr>
+    <tr><td>Used for data science/ML exploration</td><td>Used for business intelligence/reporting</td></tr>
+  </table>
+</div>
+
+<!-- ======================================================================== -->
+<!--  SECTION 2: HIVE & SQOOP                                                -->
+<!-- ======================================================================== -->
+<div class="section-divider" id="hive-sqoop"><span class="num">02</span></div>
+<h2>Hive & Sqoop</h2>
+
+<h3 id="hive-arch">Hive Architecture</h3>
+<div class="concept-card">
+  <h5>🔑 Hive Components (asked June 2025)</h5>
+  <p><strong>Metastore:</strong> Stores metadata (table schemas, column types, partition info). Default metastore is <strong>Derby</strong>. Can be configured with MySQL, HBase, etc.</p>
+  <p><strong>Driver:</strong> Receives HiveQL queries, manages the lifecycle of the query through compilation, optimization, and execution.</p>
+  <p><strong>Compiler:</strong> Parses the query, performs semantic analysis, generates a logical plan, and creates an execution plan (DAG of MapReduce/Spark/Tez jobs).</p>
+  <p><strong>Execution Engine:</strong> Executes the plan. Can be MapReduce, Spark, or Tez. <em>Any of the above</em> can act as Hive execution engine.</p>
+</div>
+
+<h3 id="hive-tables">Managed vs External Tables</h3>
+
+<h4>Managed (Internal) Table</h4>
+<pre><code><span class="lang-tag">HiveQL</span>
+CREATE TABLE customers (
+    customerid INT,
+    name STRING,
+    age INT,
+    city STRING,
+    email STRING
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE;
+
+-- Load data from LOCAL filesystem
+LOAD DATA LOCAL INPATH '/home/hadoop/customers.txt' INTO TABLE customers;
+
+-- Load from HDFS (MOVES the file, doesn't copy!)
+LOAD DATA INPATH '/user/hadoop/data/products.txt' INTO TABLE products;
+</code></pre>
+
+<div class="concept-card warn">
+  <h5>⚠️ Exam Alert — Drop Behavior</h5>
+  <p><strong>Managed table DROP:</strong> Deletes BOTH metadata AND data files from HDFS.</p>
+  <p><strong>External table DROP:</strong> Deletes ONLY metadata. Data files remain in HDFS. This is why external tables are preferred in production.</p>
+</div>
+
+<h4>External Table</h4>
+<pre><code><span class="lang-tag">HiveQL</span>
+-- External table (asked in every ESA paper)
+CREATE EXTERNAL TABLE products_ext (
+    productid INT,
+    productname STRING,
+    category STRING,
+    price FLOAT,
+    customerid INT
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+LOCATION '/user/hive/warehouse/products/';
+
+-- With partitioning (asked June 2025)
+CREATE EXTERNAL TABLE sales_data (
+    sale_id INT,
+    item STRING,
+    amount DOUBLE,
+    sale_date STRING
+)
+PARTITIONED BY (region STRING)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+LOCATION '/user/hive/warehouse/sales_data';
+</code></pre>
+
+<h3 id="hive-file-formats">File Formats</h3>
+<table>
+  <tr><th>Format</th><th>Type</th><th>Use Case</th></tr>
+  <tr><td>TEXTFILE</td><td>Row-based</td><td>Default, human-readable, slower for analytics</td></tr>
+  <tr><td>CSV / JSON</td><td>Row-based</td><td>Interchange formats</td></tr>
+  <tr><td>AVRO</td><td>Row-based</td><td>Schema evolution, serialization</td></tr>
+  <tr><td><strong>ORC</strong></td><td>Column-based</td><td>Optimized for Hive, compression, fast reads</td></tr>
+  <tr><td><strong>Parquet</strong></td><td>Column-based</td><td>Best for Spark analytics, compressed, efficient</td></tr>
+</table>
+
+<pre><code><span class="lang-tag">HiveQL</span>
+-- Create ORC table (column-based)
+CREATE TABLE products_orc (
+    productid INT, productname STRING,
+    category STRING, price FLOAT, customerid INT
+) STORED AS ORC;
+
+-- Insert from text table to ORC
+INSERT INTO TABLE products_orc SELECT * FROM products_txt;
+</code></pre>
+
+<h3 id="hive-partitioning">Partitioning & Bucketing</h3>
+
+<h4>Static Partitioning</h4>
+<pre><code><span class="lang-tag">HiveQL</span>
+CREATE TABLE products_static_part (
+    productid INT, productname STRING,
+    price FLOAT, customerid INT
+)
+PARTITIONED BY (category STRING)
+STORED AS TEXTFILE;
+
+-- Insert with explicit partition value
+INSERT INTO TABLE products_static_part
+PARTITION (category='Electronics')
+SELECT productid, productname, price, customerid
+FROM products_raw WHERE category = 'Electronics';
+</code></pre>
+
+<h4>Dynamic Partitioning</h4>
+<pre><code><span class="lang-tag">HiveQL</span>
+-- Enable dynamic partitioning
+SET hive.exec.dynamic.partition=true;
+SET hive.exec.dynamic.partition.mode=nonstrict;
+
+CREATE TABLE products_dynamic_part (
+    productid INT, productname STRING,
+    price FLOAT, customerid INT
+)
+PARTITIONED BY (category STRING)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ',';
+
+-- Hive auto-creates partitions from SELECT
+INSERT INTO TABLE products_dynamic_part PARTITION (category)
+SELECT productid, productname, price, customerid, category
+FROM products_raw;
+</code></pre>
+
+<h4>Bucketing (asked April 2022)</h4>
+<pre><code><span class="lang-tag">HiveQL</span>
+SET hive.enforce.bucketing=true;
+
+CREATE TABLE products_bucketed (
+    productid INT, productname STRING,
+    category STRING, price FLOAT
+)
+CLUSTERED BY (productid) INTO 4 BUCKETS
+STORED AS ORC;
+
+INSERT INTO TABLE products_bucketed
+SELECT productid, productname, category, price
+FROM products_raw SORT BY productid;
+</code></pre>
+<p><strong>Benefits of bucketing:</strong> Faster joins (map-side joins), better sampling, consistent distribution using hash function.</p>
+
+<h3 id="hive-queries">HiveQL Queries — Exam Favorites</h3>
+<pre><code><span class="lang-tag">HiveQL</span>
+-- Rename table (MCQ answer)
+ALTER TABLE t1 RENAME TO t2;
+
+-- Create database
+CREATE DATABASE anotherDB;
+
+-- Right outer join (asked June 2025)
+SELECT o.*, c.*
+FROM orders o
+RIGHT OUTER JOIN customers c ON o.customer_id = c.customer_id
+WHERE o.order_amount > 500;
+
+-- Left outer join (asked June 2025)
+SELECT e.*, d.*
+FROM employees e
+LEFT OUTER JOIN departments d ON e.dept_id = d.dept_id;
+
+-- Inner join
+SELECT a.Name, a.Id, b.Name
+FROM Table1 a JOIN Table2 b ON a.Id = b.Id;
+
+-- Second highest salary (asked June 2025)
+SELECT MAX(salary) FROM employee_details
+WHERE salary < (SELECT MAX(salary) FROM employee_details);
+
+-- Top 5 highest paid
+SELECT * FROM employee_details ORDER BY salary DESC LIMIT 5;
+
+-- Load from HDFS into partitioned table
+FROM NYSE INSERT INTO NYSE_Partition PARTITION(date_txn)
+SELECT exchange_symbol, company, open_price, day_high,
+       day_low, close_price, txn, adjust_close, date_txn
+WHERE open_price > 68 AND close_price < 70;
+</code></pre>
+
+<!-- ======================================================================== -->
+<!--  SECTION 3: MONGODB & NOSQL                                             -->
+<!-- ======================================================================== -->
+<div class="section-divider" id="mongodb"><span class="num">03</span></div>
+<h2>MongoDB & NoSQL</h2>
+
+<h3 id="cap-theorem">CAP Theorem (asked in every paper)</h3>
+<div class="concept-card purple">
+  <h5>🔑 CAP Theorem</h5>
+  <p>States that a distributed system can guarantee only <strong>two of three</strong> properties simultaneously:</p>
+  <ul>
+    <li><strong>C</strong>onsistency — Every read receives the most recent write</li>
+    <li><strong>A</strong>vailability — Every request receives a response (not an error)</li>
+    <li><strong>P</strong>artition Tolerance — System continues to operate despite network partitions</li>
+  </ul>
+  <p><strong>MongoDB = CP system</strong> (Consistency + Partition Tolerance). In case of network partition, MongoDB sacrifices availability to maintain consistency.</p>
+</div>
+
+<h3 id="nosql-types">Four Types of NoSQL Databases</h3>
+<table>
+  <tr><th>Type</th><th>Example</th><th>Use Case</th></tr>
+  <tr><td>Document Store</td><td>MongoDB, CouchDB</td><td>JSON/BSON documents, flexible schema</td></tr>
+  <tr><td>Key-Value Store</td><td>Redis, DynamoDB</td><td>Simple lookups, caching</td></tr>
+  <tr><td>Column-Family Store</td><td>HBase, Cassandra</td><td>Time-series data, wide columns</td></tr>
+  <tr><td>Graph Database</td><td>Neo4j</td><td>Social networks, relationships</td></tr>
+</table>
+<p><strong>MongoDB use cases:</strong> Video gaming, content management, e-commerce applications — <em>all of the above</em>.</p>
+<p><strong>A collection in MongoDB</strong> is <em>a group of related documents</em> (not databases, not rows).</p>
+
+<h3 id="mongo-crud">MongoDB CRUD Commands</h3>
+
+<h4>Create Collection & Insert</h4>
+<pre><code><span class="lang-tag">MongoDB Shell</span>
+// Create collection (implicit — created on first insert)
+db.createCollection("customer_data")
+
+// Insert one document
+db.orders.insertOne({
+    "order_id": 1,
+    "order_customer_id": 11599,
+    "order_status": "CLOSED"
+})
+
+// Insert multiple documents (asked June 2025)
+db.product_inventory.insertMany([
+    {"product_name": "Laptop", "category": "Electronics", "price": 55000, "stock_quantity": 50},
+    {"product_name": "Phone Case", "category": "Accessories", "price": 500, "stock_quantity": 200},
+    {"product_name": "Monitor", "category": "Electronics", "price": 15000, "stock_quantity": 30},
+    {"product_name": "USB Cable", "category": "Accessories", "price": 300, "stock_quantity": 100}
+])
+</code></pre>
+
+<h4>Read / Find</h4>
+<pre><code><span class="lang-tag">MongoDB Shell</span>
+// Find all documents
+db.reviews.find()
+
+// Find with condition
+db.reviews.find({"rating": 1})
+
+// Find with multiple conditions (AND)
+db.salesdata.find({"country": "India", "sales_id": 1})
+
+// Find with OR condition (asked in ESA)
+db.reviews.find({
+    "$or": [
+        {"name": "Ghar ka khana Pvt Ltd"},
+        {"cuisine": "Italian"}
+    ]
+})
+
+// Find in nested document
+db.salesdata.find({"Product_detail.product_id": 101})
+
+// Find Electronics with price > 10000 (asked June 2025)
+db.product_inventory.find({
+    "category": "Electronics",
+    "price": {"$gt": 10000}
+})
+
+// Sort ascending by age (MCQ answer: sort({age:1}))
+db.users.find().sort({age: 1})
+
+// Sort descending
+db.reviews.find().sort({"rating": -1}).limit(5)
+
+// Projection (select specific fields)
+db.business.find(
+    {"rating": 1},
+    {"cuisine": 1, "_id": 0}
+)
+
+// Check field exists AND is null
+db.salesdata.find({"Job": {"$exists": true, "$eq": null}})
+
+// Count documents
+db.reviews.countDocuments({"rating": 5})
+</code></pre>
+
+<h4>Update</h4>
+<pre><code><span class="lang-tag">MongoDB Shell</span>
+// Update many — change city name (asked June 2025)
+db.customer_data.updateMany(
+    {"city": "Bombay"},
+    {"$set": {"city": "Mumbai"}}
+)
+
+// Update — reduce stock by 10 (asked June 2025)
+db.product_inventory.updateMany(
+    {"category": "Accessories"},
+    {"$inc": {"stock_quantity": -10}}
+)
+
+// Update one
+db.reviews.updateOne(
+    {"name": "HomeFood Pvt Ltd"},
+    {"$set": {"name": "FoodMadeInHome Pvt Ltd"}}
+)
+</code></pre>
+
+<h4>Delete</h4>
+<pre><code><span class="lang-tag">MongoDB Shell</span>
+// Delete one
+db.customer_data.deleteOne({"name": "John"})
+
+// Delete many (asked June 2025)
+db.product_inventory.deleteMany({"stock_quantity": {"$lt": 15}})
+
+// Delete all documents in collection
+db.collection.deleteMany({})
+</code></pre>
+
+<h3 id="pymongo">PyMongo Code</h3>
+<pre><code><span class="lang-tag">Python</span>
+from pymongo import MongoClient
+from pprint import pprint
+from bson import ObjectId
+
+# Connect
+client = MongoClient("localhost:27017")
+
+# Create/use database
+db = client['pes']
+
+# Create collection and insert
+student_collection = db["student_data"]
+student_collection.insert_one({
+    "Name": "Maureen Skinner", "Age": 27, "Sex": "F", "Batch": "Oct 20"
+})
+
+# Find all
+for item in student_collection.find():
+    pprint(item)
+
+# Find one
+record = student_collection.find_one({"Age": 27})
+
+# Find by ObjectId
+record = student_collection.find_one({'_id': ObjectId('692991866b0af236b16509fd')})
+
+# Insert many
+productcollection.insert_many(productlist)
+
+# Update many
+productcollection.update_many(
+    {"name": "AC"},
+    {"$set": {"name": "Air conditioner"}}
+)
+
+# Delete
+salesdata.delete_one({"sales_id": 2})
+
+# List databases and collections
+client.list_database_names()
+db.list_collection_names()
+</code></pre>
+
+<h3 id="mongo-aggregation">Aggregation Pipeline</h3>
+<pre><code><span class="lang-tag">Python</span>
+from bson.son import SON
+
+# Which brand has maximum 5-star ratings?
+pipeline = [
+    {"$match": {"rating": 5}},
+    {"$group": {"_id": "$brand", "count": {"$sum": 1}}},
+    {"$sort": SON([("count", -1), ("_id", -1)])}
+]
+pprint(list(productcollection.aggregate(pipeline)))
+
+# Count businesses by cuisine
+pipeline = [
+    {"$group": {"_id": "$cuisine", "cnt": {"$sum": 1}}},
+    {"$sort": {"cnt": -1}}
+]
+result = business.aggregate(pipeline)
+for i in result:
+    pprint(i)
+</code></pre>
+
+<!-- ======================================================================== -->
+<!--  SECTION 4: APACHE SPARK                                                -->
+<!-- ======================================================================== -->
+<div class="section-divider" id="spark"><span class="num">04</span></div>
+<h2>Apache Spark</h2>
+
+<h3 id="spark-arch">Spark Architecture & DAG</h3>
+<div class="concept-card">
+  <h5>🔑 Spark Architecture (asked every paper)</h5>
+  <p>Apache Spark is a <strong>unified analytics engine</strong> for large-scale data processing. It supports batch processing, streaming, SQL queries, and machine learning — all in one framework.</p>
+  <p><strong>Components:</strong></p>
+  <ul>
+    <li><strong>Driver Program:</strong> Runs the main() function, creates SparkContext, builds DAG, schedules jobs</li>
+    <li><strong>SparkContext (sc):</strong> Entry point for Spark functionality, connects to cluster manager</li>
+    <li><strong>Cluster Manager:</strong> YARN / Mesos / Standalone — allocates resources across cluster</li>
+    <li><strong>Worker Node:</strong> Executes tasks assigned by the driver</li>
+    <li><strong>Executor:</strong> JVM process on each worker that runs tasks and holds cached data</li>
+  </ul>
+</div>
+
+<div class="concept-card success">
+  <h5>🔑 DAG — Directed Acyclic Graph (asked June 2025)</h5>
+  <p>Spark builds a DAG of stages from the transformations in your code. Unlike MapReduce which writes intermediate results to disk after every Map-Reduce step, Spark's DAG optimizer:</p>
+  <ul>
+    <li>Chains together narrow transformations (map, filter) into a single <strong>stage</strong></li>
+    <li>Only creates new stages at shuffle boundaries (groupBy, reduceByKey)</li>
+    <li>Keeps data <strong>in-memory</strong> between stages (vs MapReduce disk I/O)</li>
+    <li>Enables <strong>pipeline optimization</strong> — multiple transformations on same data without materialization</li>
+  </ul>
+  <p><strong>Result:</strong> Up to 100x faster than MapReduce for iterative workloads (e.g., ML algorithms).</p>
+</div>
+
+<div class="concept-card purple">
+  <h5>📝 Spark vs Hadoop MapReduce</h5>
+  <table>
+    <tr><th>Spark</th><th>MapReduce</th></tr>
+    <tr><td>In-memory processing</td><td>Disk-based I/O between stages</td></tr>
+    <tr><td>DAG execution engine</td><td>Only Map → Reduce stages</td></tr>
+    <tr><td>Supports SQL, ML, Streaming, Graph</td><td>Only batch MapReduce</td></tr>
+    <tr><td>Lazy evaluation with optimization</td><td>Eager execution</td></tr>
+    <tr><td>Interactive (Spark Shell)</td><td>Batch-only</td></tr>
+  </table>
+</div>
+
+<h3 id="rdd">RDD — Resilient Distributed Dataset</h3>
+<p><strong>RDD</strong> = Resilient Distributed Dataset. Fundamental data structure of Spark: immutable, distributed collection of objects partitioned across the cluster.</p>
+
+<h4>Creating RDDs</h4>
+<pre><code><span class="lang-tag">PySpark</span>
+from pyspark.context import SparkContext
+from pyspark.sql.session import SparkSession
+
+sc = SparkContext.getOrCreate()
+spark = SparkSession(sc)
+
+# From a list (parallelize)
+rdd = sc.parallelize([1, 2, 3, 4, 5, 6])
+
+# From a text file
+rdd_emp = sc.textFile("/path/to/employees.txt")
+
+# From a list of key-value pairs (asked June 2025)
+rdd_kv = sc.parallelize([("math", 85), ("science", 90), ("math", 75), ("english", 70)])
+</code></pre>
+
+<h4>Transformations (Lazy — not executed until an action)</h4>
+<pre><code><span class="lang-tag">PySpark</span>
+# map — apply function to each element
+squares = rdd.map(lambda x: x ** 2)
+
+# filter — keep elements matching condition
+evens = rdd.filter(lambda x: x % 2 == 0)
+
+# flatMap — map + flatten
+words = rdd_text.flatMap(lambda x: x.split(' '))
+
+# distinct — remove duplicates
+unique_words = words.distinct()
+
+# Extract words and remove duplicates (asked June 2025)
+rdd_lines.flatMap(lambda line: line.split(' ')).distinct()
+
+# Key-Value: groupByKey
+rdd_kv.groupByKey().mapValues(list).collect()
+
+# Key-Value: reduceByKey (sum salaries by department)
+dep_salary = rdd_emp.map(lambda x: (x.split(',')[2], int(x.split(',')[3])))
+dep_salary.reduceByKey(lambda a, b: a + b).collect()
+
+# Average salary by department
+sum_count = dep_salary.mapValues(lambda s: (s, 1)) \
+    .reduceByKey(lambda a, b: (a[0]+b[0], a[1]+b[1]))
+avg = sum_count.mapValues(lambda x: x[0]/x[1])
+</code></pre>
+
+<h4>Actions (trigger computation)</h4>
+<pre><code><span class="lang-tag">PySpark</span>
+rdd.collect()        # Return all elements as list
+rdd.count()          # Count elements
+rdd.first()          # First element
+rdd.take(5)          # First 5 elements
+rdd.sum()            # Sum of elements (asked April 2022)
+rdd.max()            # Maximum value
+rdd.min()            # Minimum value
+rdd.mean()           # Mean value
+rdd.stdev()          # Standard deviation
+rdd.variance()       # Variance
+rdd.reduce(lambda a, b: a + b)  # Sum using reduce
+</code></pre>
+
+<h4>RDD Persistence</h4>
+<pre><code><span class="lang-tag">PySpark</span>
+from pyspark import StorageLevel
+
+# Persist in memory only
+rdd.persist(StorageLevel.MEMORY_ONLY)
+
+# Other options: MEMORY_ONLY_SER, MEMORY_AND_DISK, DISK_ONLY
+# Unpersist
+rdd.unpersist()
+</code></pre>
+<p><strong>MCQ Answer:</strong> Various ways to persist RDD: Memory only, Memory only serialized, Memory and hard drive — <em>All of the above</em>.</p>
+
+<h3 id="dataframe-ops">DataFrame Operations</h3>
+
+<h4>Reading Data</h4>
+<pre><code><span class="lang-tag">PySpark</span>
+# Read CSV with infer schema
+df = spark.read.format("csv") \
+    .option("inferSchema", True) \
+    .option("header", True) \
+    .option("sep", ",") \
+    .load("SalesTraining.csv")
+
+# Read with custom schema
+from pyspark.sql.types import StructType, StructField, StringType, IntegerType, FloatType, DoubleType
+
+schema = StructType([
+    StructField("Region", StringType()),
+    StructField("Country", StringType()),
+    StructField("OrderID", IntegerType()),
+    StructField("UnitPrice", FloatType()),
+    StructField("TotalProfit", DoubleType())
+])
+df = spark.read.format("csv").option("header", True).schema(schema).load("file.csv")
+
+# Read JSON into DataFrame (asked June 2025)
+df = spark.read.json("file.json")
+</code></pre>
+
+<h4>Basic Operations</h4>
+<pre><code><span class="lang-tag">PySpark</span>
+from pyspark.sql.functions import col, lit, when, avg, count, sum as _sum
+
+# Show schema and data
+df.printSchema()
+df.show(5, False)          # 5 rows, no truncation
+df.columns                 # List column names
+df.count()                 # Number of rows
+len(df.columns)            # Number of columns
+df.describe().show()       # Summary statistics
+
+# Select columns
+df.select("Region", "Country", "Total Profit").show()
+
+# Rename columns (MCQ answer: withColumnRenamed)
+df = df.withColumnRenamed("Sales Channel", "SalesChannel")
+
+# Add new column
+df = df.withColumn("Register_Site", lit("www.google.com"))
+df = df.withColumn("TotalSale", col("Units Sold") * col("Unit Price"))
+
+# Cast data type
+df = df.withColumn("Order ID", col("Order ID").cast("long"))
+
+# Drop column
+df = df.drop("Country", "Item Type")
+
+# Filter / Where
+df.filter(col("Region") == "Asia").show()
+df.where((col("Region") == "Asia") & (col("Sales Channel") == "Online")).show()
+
+# CASE WHEN using expr
+from pyspark.sql.functions import expr
+df.select("Region", expr("CASE WHEN TotalProfit > 300000 THEN 'Good' ELSE 'Average' END AS value_desc")).show()
+</code></pre>
+
+<h4>Handling Nulls</h4>
+<pre><code><span class="lang-tag">PySpark</span>
+# Check null counts per column (asked in EVERY exam)
+from pyspark.sql.functions import isnull, when, count, col
+df.select([count(when(isnull(c), c)).alias(c) for c in df.columns]).show()
+
+# Drop rows with any null
+df = df.na.drop()
+
+# Fill nulls with value
+df.fillna(34).show()
+df.fillna({'Units Sold': 0, 'Total Revenue': 0.0}).show()
+
+# Replace values
+df.na.replace('Bill Gates', 'Satya Nadella').show()
+</code></pre>
+
+<h4>Aggregations & GroupBy</h4>
+<pre><code><span class="lang-tag">PySpark</span>
+from pyspark.sql.functions import avg, count, sum as _sum, min as _min, max as _max
+
+# GroupBy with aggregation
+df.groupBy("Region").max("Total_Profit").show()
+df.groupBy("Region").agg({'ItemType': 'count'}).show()
+df.groupBy("Region").agg(
+    _sum("Units Sold").alias("Total Units Sold"),
+    _avg("Unit Price").alias("Avg Unit Price")
+).orderBy(col("Total Units Sold").desc()).show()
+
+# Global aggregation
+df.select(avg("Total_Profit").alias("Average Profit")).show()
+
+# Distinct and duplicate handling
+df.distinct().show()
+df.dropDuplicates(['Month']).show()
+
+# Sorting
+df.orderBy('Region', ascending=True).show()
+df.orderBy('Region', ascending=False).show()
+</code></pre>
+
+<h4>RDD to DataFrame (MCQ: both methods work)</h4>
+<pre><code><span class="lang-tag">PySpark</span>
+# Method 1: toDF
+columns = ["Region", "Country", "ItemType"]
+tupleRDD.toDF(columns).show()
+
+# Method 2: createDataFrame
+df = spark.createDataFrame(rdd, schema=columns)
+
+# MCQ Answer: Both A (createDataFrame) and B (toDF) are correct
+</code></pre>
+
+<h3 id="spark-sql">Spark SQL</h3>
+<pre><code><span class="lang-tag">PySpark</span>
+# Register DataFrame as temporary SQL view
+df.createOrReplaceTempView("sales")
+
+# Run SQL queries
+spark.sql("SELECT * FROM sales WHERE Region = 'Asia'").show()
+
+spark.sql("""
+    SELECT `Item Type`, SUM(`Total Revenue`) AS TotalRevenue
+    FROM sales
+    GROUP BY `Item Type`
+    ORDER BY TotalRevenue DESC LIMIT 5
+""").show()
+
+# Joins in SQL
+spark.sql("""
+    SELECT a.Region, a.Country, b.SalesPerson
+    FROM creditcard a
+    JOIN sales_table b ON trim(a.Region) = trim(b.Region)
+    WHERE trim(a.Region) = 'Asia'
+""").show()
+
+# Count lines containing "error" (asked June 2025)
+rdd = sc.textFile("/path/to/file.txt")
+error_count = rdd.filter(lambda line: "error" in line.lower()).count()
+print(error_count)
+
+# Read JSON, filter, count (asked June 2025)
+df = spark.read.json("file.json")
+count = df.select("name", "salary").filter(col("salary") > 50000).count()
+</code></pre>
+
+<h3 id="cache-persist">Cache & Persist</h3>
+<pre><code><span class="lang-tag">PySpark</span>
+from pyspark import StorageLevel
+
+# Cache (stores in memory)
+cacheDF = df.cache()
+
+# Persist with storage level
+persistDF = df.persist(StorageLevel.MEMORY_AND_DISK)
+</code></pre>
+
+<h3 id="coalesce-repartition">Coalesce vs Repartition (asked July 2024)</h3>
+<div class="concept-card">
+  <h5>🔑 Coalesce vs Repartition</h5>
+  <table>
+    <tr><th>Coalesce</th><th>Repartition</th></tr>
+    <tr><td>Can only <strong>decrease</strong> partitions</td><td>Can <strong>increase or decrease</strong> partitions</td></tr>
+    <tr><td>No shuffle (moves data within existing partitions)</td><td>Full shuffle (redistributes data evenly)</td></tr>
+    <tr><td>Faster, less network I/O</td><td>Slower, more expensive</td></tr>
+    <tr><td>May result in uneven partition sizes</td><td>Produces even partition sizes</td></tr>
+  </table>
+</div>
+<pre><code><span class="lang-tag">PySpark</span>
+print(df.rdd.getNumPartitions())   # Check current partitions
+cDF = df.repartition(4)            # Increase to 4 (shuffle)
+cDF = cDF.coalesce(1)              # Decrease to 1 (no shuffle)
+
+# Write with coalesce to single file
+df.coalesce(1).write.option("header", "true").mode("overwrite").csv("output/")
+</code></pre>
+
+<h4>Writing DataFrames</h4>
+<pre><code><span class="lang-tag">PySpark</span>
+# Write as CSV
+df.write.option("header", "true").mode("overwrite").csv("output_csv/")
+
+# Write as Parquet (preferred for big data analytics)
+df.write.mode("overwrite").parquet("output_parquet/")
+</code></pre>
+
+<!-- ======================================================================== -->
+<!--  SECTION 5: SPARK ML                                                    -->
+<!-- ======================================================================== -->
+<div class="section-divider" id="spark-ml"><span class="num">05</span></div>
+<h2>Spark ML</h2>
+
+<div class="concept-card warn">
+  <h5>⚡ This is worth 25 marks in Section C — master this!</h5>
+  <p>The pattern is ALWAYS the same across all past papers: StringIndexer → VectorAssembler → train/test split → build model → predict → evaluate. Memorize this flow!</p>
+</div>
+
+<h3 id="transformers">Feature Transformers</h3>
+
+<h4>StringIndexer — Convert categorical strings to numeric indices</h4>
+<pre><code><span class="lang-tag">PySpark ML</span>
+from pyspark.ml.feature import StringIndexer
+
+# Single column
+indexer = StringIndexer(inputCol="gender", outputCol="gender_indexed")
+df = indexer.fit(df).transform(df)
+
+# Multiple columns at once (most common in exam)
+indexers = StringIndexer(
+    inputCols=['stroke', 'gender', 'heart_disease', 'smoking_history'],
+    outputCols=['label', 'gender_indexed', 'heart_disease_indexed', 'smoking_history_indexed']
+)
+df = indexers.fit(df).transform(df)
+
+# Then drop original string columns
+cols_to_drop = ('gender', 'heart_disease', 'smoking_history', 'stroke')
+df = df.drop(*cols_to_drop)
+
+# Verify no string columns remain
+df.printSchema()
+</code></pre>
+
+<h4>Binarizer — Threshold numerical feature to 0/1</h4>
+<pre><code><span class="lang-tag">PySpark ML</span>
+from pyspark.ml.feature import Binarizer
+
+# BMI > 30 → Obese (1), else Healthy (0)
+binarizer = Binarizer(inputCol="BMI", outputCol="BodyType", threshold=30.0)
+df = binarizer.transform(df)
+</code></pre>
+
+<h4>Bucketizer — Group continuous values into bins</h4>
+<pre><code><span class="lang-tag">PySpark ML</span>
+from pyspark.ml.feature import Bucketizer
+
+splits = [0, 25.0, 50.0, 75.0, 100.0]
+bucketizer = Bucketizer(inputCol="age", outputCol="ageGroup", splits=splits)
+df = bucketizer.transform(df)
+</code></pre>
+
+<h4>OneHotEncoder</h4>
+<pre><code><span class="lang-tag">PySpark ML</span>
+from pyspark.ml.feature import OneHotEncoder
+
+encoder = OneHotEncoder(
+    inputCols=["gender_indexed", "heart_disease_indexed"],
+    outputCols=["genderVec", "heart_diseaseVec"]
+)
+df = encoder.fit(df).transform(df)
+</code></pre>
+
+<h4>VectorAssembler — Combine all features into one vector column</h4>
+<pre><code><span class="lang-tag">PySpark ML</span>
+from pyspark.ml.feature import VectorAssembler
+
+# Combine all feature columns into single 'features' column
+features_col = ["age", "diabetes", "hypertension", "BMI", "BodyType",
+                "ageGroup", "gender_indexed", "heart_disease_indexed"]
+
+assembler = VectorAssembler(inputCols=features_col, outputCol="features")
+df = assembler.transform(df)
+
+# Keep only features and label
+df = df.select("features", "label")
+</code></pre>
+
+<h4>Scalers</h4>
+<pre><code><span class="lang-tag">PySpark ML</span>
+from pyspark.ml.feature import StandardScaler, MinMaxScaler, Normalizer
+
+# StandardScaler (mean=0, std=1) — needs dense vector
+stdscaler = StandardScaler(inputCol="features_array", outputCol="scaledfeatures")
+df = stdscaler.fit(df).transform(df)
+
+# MinMaxScaler (scales to [0,1])
+mmxscaler = MinMaxScaler(inputCol="features_array", outputCol="mmxscaledfeatures")
+df = mmxscaler.fit(df).transform(df)
+
+# Normalizer (L2 norm)
+normalizer = Normalizer(inputCol="features_array", outputCol="normscaledfeatures")
+df = normalizer.transform(df)  # No .fit() needed!
+</code></pre>
+
+<h3 id="ml-algorithms">ML Algorithms</h3>
+
+<h4>Train-Test Split</h4>
+<pre><code><span class="lang-tag">PySpark ML</span>
+# 70-30 split (most common)
+trainDF, testDF = df.randomSplit([0.7, 0.3], seed=2020)
+
+# 75-25 split (one-fourth for testing)
+trainDF, testDF = df.randomSplit([0.75, 0.25], seed=2020)
+
+# 67-33 split (one-third for testing — asked April 2022)
+trainDF, testDF = df.randomSplit([0.67, 0.33], seed=2020)
+
+# 80-20 split (one-fifth for testing — asked July 2024)
+trainDF, testDF = df.randomSplit([0.8, 0.2], seed=2020)
+
+print("Training:", trainDF.count())
+print("Testing:", testDF.count())
+</code></pre>
+
+<h4>Logistic Regression (Classification — most asked)</h4>
+<pre><code><span class="lang-tag">PySpark ML</span>
+from pyspark.ml.classification import LogisticRegression
+
+lr = LogisticRegression(featuresCol="features", labelCol="label",
+                        maxIter=10, regParam=0.3, elasticNetParam=0.8)
+lrmodel = lr.fit(trainDF)
+
+# Predict
+predictionDF = lrmodel.transform(testDF)
+predictionDF.select("label", "rawPrediction", "probability", "prediction").show(10, False)
+
+# Accuracy
+accuracy = predictionDF.filter(
+    predictionDF.label == predictionDF.prediction
+).count() / float(predictionDF.count())
+print("Accuracy =", accuracy)
+</code></pre>
+
+<h4>Linear Regression (Regression — second most asked)</h4>
+<pre><code><span class="lang-tag">PySpark ML</span>
+from pyspark.ml.regression import LinearRegression
+from pyspark.ml.evaluation import RegressionEvaluator
+
+lr = LinearRegression(featuresCol="features", labelCol="price")
+lrmodel = lr.fit(trainDF)
+
+# Predict
+predictionDF = lrmodel.transform(testDF)
+
+# RMSE
+evaluator = RegressionEvaluator(
+    labelCol="price", predictionCol="prediction", metricName="rmse"
+)
+rmse = evaluator.evaluate(predictionDF)
+print("RMSE =", rmse)
+
+# MSE
+evaluator_mse = RegressionEvaluator(
+    labelCol="Profit", predictionCol="prediction", metricName="mse"
+)
+mse = evaluator_mse.evaluate(predictionDF)
+print("MSE =", mse)
+</code></pre>
+
+<h4>Decision Tree Classifier</h4>
+<pre><code><span class="lang-tag">PySpark ML</span>
+from pyspark.ml.classification import DecisionTreeClassifier
+
+dt = DecisionTreeClassifier(featuresCol="features", labelCol="label", maxDepth=10)
+dtmodel = dt.fit(trainDF)
+dtpredictionDF = dtmodel.transform(testDF)
+</code></pre>
+
+<h4>Random Forest Classifier</h4>
+<pre><code><span class="lang-tag">PySpark ML</span>
+from pyspark.ml.classification import RandomForestClassifier
+
+rf = RandomForestClassifier(featuresCol="features", labelCol="label")
+rfmodel = rf.fit(trainDF)
+rfpredictionDF = rfmodel.transform(testDF)
+</code></pre>
+
+<h3 id="ml-evaluation">Model Evaluation</h3>
+<pre><code><span class="lang-tag">PySpark ML</span>
+from pyspark.ml.evaluation import BinaryClassificationEvaluator, MulticlassClassificationEvaluator
+
+# Binary Classification
+evaluator = BinaryClassificationEvaluator()
+print("AUC-ROC =", evaluator.evaluate(predictionDF))
+
+# Multiclass metrics
+multievaluator = MulticlassClassificationEvaluator(labelCol="label", predictionCol="prediction")
+
+print("Accuracy:", multievaluator.evaluate(predictionDF, {multievaluator.metricName: "accuracy"}))
+print("Precision:", multievaluator.evaluate(predictionDF, {multievaluator.metricName: "weightedPrecision"}))
+print("Recall:", multievaluator.evaluate(predictionDF, {multievaluator.metricName: "weightedRecall"}))
+print("F1 Score:", multievaluator.evaluate(predictionDF, {multievaluator.metricName: "f1"}))
+
+# Simple accuracy calculation
+accuracy = predictionDF.filter(
+    predictionDF.label == predictionDF.prediction
+).count() / float(predictionDF.count())
+
+# Regression metrics
+from pyspark.ml.evaluation import RegressionEvaluator
+reg_eval = RegressionEvaluator(labelCol="label", predictionCol="prediction")
+print("RMSE:", reg_eval.evaluate(predictionDF, {reg_eval.metricName: "rmse"}))
+print("MSE:", reg_eval.evaluate(predictionDF, {reg_eval.metricName: "mse"}))
+print("MAE:", reg_eval.evaluate(predictionDF, {reg_eval.metricName: "mae"}))
+print("R²:", reg_eval.evaluate(predictionDF, {reg_eval.metricName: "r2"}))
+</code></pre>
+
+<h3 id="pipeline">Pipeline & Model Persistence</h3>
+<pre><code><span class="lang-tag">PySpark ML</span>
+from pyspark.ml import Pipeline, PipelineModel
+
+# Build pipeline with transformers + estimator
+pipeline = Pipeline(stages=[binarizer, bucketizer, indexers, encoder, assembler, lr])
+
+# Fit pipeline on training data
+pipelinemodel = pipeline.fit(trainDF)
+
+# Transform test data
+predictions = pipelinemodel.transform(testDF)
+
+# Save model
+pipelinemodel.write().overwrite().save("lrmodel")
+
+# Load model
+loaded_model = PipelineModel.load("lrmodel")
+prediction = loaded_model.transform(testDF)
+</code></pre>
+
+<!-- ======================================================================== -->
+<!--  SECTION 6: KAFKA & STREAMING                                           -->
+<!-- ======================================================================== -->
+<div class="section-divider" id="kafka"><span class="num">06</span></div>
+<h2>Kafka & Streaming</h2>
+
+<h3 id="kafka-arch">Kafka Architecture</h3>
+<div class="concept-card">
+  <h5>🔑 Apache Kafka Components</h5>
+  <p><strong>ZooKeeper:</strong> Manages broker metadata, leader election, topic partition info. Runs on port <strong>2181</strong>.</p>
+  <p><strong>Kafka Broker:</strong> Accepts producer messages, serves consumers, handles replication. Runs on port <strong>9092</strong>.</p>
+  <p><strong>Producer:</strong> Publishes messages to topics.</p>
+  <p><strong>Consumer:</strong> Reads messages from topics.</p>
+  <p><strong>Topic:</strong> Category/feed to which records are published. Divided into partitions.</p>
+</div>
+
+<h3 id="kafka-commands">Kafka Commands (AWS EMR)</h3>
+<pre><code><span class="lang-tag">Bash</span>
+# Install Kafka on EMR
+sudo yum update -y
+wget https://downloads.apache.org/kafka/3.9.0/kafka_2.13-3.9.0.tgz
+tar -xvzf kafka_2.13-3.9.0.tgz
+mv kafka_2.13-3.9.0 kafka
+cd kafka
+
+# Terminal 1: Start ZooKeeper (port 2181)
+bin/zookeeper-server-start.sh config/zookeeper.properties
+
+# Terminal 2: Start Kafka Broker (port 9092)
+bin/kafka-server-start.sh config/server.properties
+
+# Terminal 3: Create topic and start producer
+bin/kafka-topics.sh --create --topic demo --bootstrap-server localhost:9092
+bin/kafka-console-producer.sh --topic demo --bootstrap-server localhost:9092
+
+# Terminal 4: Start consumer
+bin/kafka-console-consumer.sh --topic demo --bootstrap-server localhost:9092 --from-beginning
+</code></pre>
+
+<!-- ======================================================================== -->
+<!--  SECTION 7: MCQ PRACTICE                                                -->
+<!-- ======================================================================== -->
+<div class="section-divider" id="mcq"><span class="num">07</span></div>
+<h2>MCQ Practice (GA Pattern)</h2>
+
+<p>Section A (1 mark each):</p>
+
+<div class="mcq">
+  <div class="q">Q1. How many versions does Hadoop have?</div>
+  <ol class="opts"><li>One</li><li>Two</li><li>Three</li><li>Four</li></ol>
+  <div class="answer"><span class="hint">Hover for answer →</span><span class="reveal">✅ c) Three (Hadoop 1, 2, and 3)</span></div>
+</div>
+
+<div class="mcq">
+  <div class="q">Q2. A DataNode Machine contains exactly:</div>
+  <ol class="opts"><li>One ResourceManager</li><li>One ApplicationMaster</li><li>One NodeManager</li><li>One MapReduce job</li></ol>
+  <div class="answer"><span class="hint">Hover for answer →</span><span class="reveal">✅ c) One NodeManager</span></div>
+</div>
+
+<div class="mcq">
+  <div class="q">Q3. Which statement is true regarding a MapReduce job?</div>
+  <ol class="opts"><li>Input to mapper is sorted key, value pairs</li><li>Number of mapper tasks equals reducer tasks</li><li>Reducer starts only when all mapper finish execution</li><li>All of the above</li></ol>
+  <div class="answer"><span class="hint">Hover for answer →</span><span class="reveal">✅ c) Reducer starts only when all mapper finish execution</span></div>
+</div>
+
+<div class="mcq">
+  <div class="q">Q4. Which is correct for an external table in Hive?</div>
+  <ol class="opts"><li>Source Data gets deleted if external table is dropped</li><li>Source Data does NOT get deleted if external table is dropped</li><li>It provides transaction capabilities like RDBMS</li><li>None of the above</li></ol>
+  <div class="answer"><span class="hint">Hover for answer →</span><span class="reveal">✅ b) Source Data does NOT get deleted</span></div>
+</div>
+
+<div class="mcq">
+  <div class="q">Q5. Which is the default Hive metastore?</div>
+  <ol class="opts"><li>Derby</li><li>MySQL</li><li>Spark-SQL</li><li>HBase</li></ol>
+  <div class="answer"><span class="hint">Hover for answer →</span><span class="reveal">✅ a) Derby</span></div>
+</div>
+
+<div class="mcq">
+  <div class="q">Q6. Which can act as Hive execution engine?</div>
+  <ol class="opts"><li>MapReduce</li><li>Spark</li><li>TEZ</li><li>Any of the above</li></ol>
+  <div class="answer"><span class="hint">Hover for answer →</span><span class="reveal">✅ d) Any of the above</span></div>
+</div>
+
+<div class="mcq">
+  <div class="q">Q7. MongoDB can be used as backend database in which use case?</div>
+  <ol class="opts"><li>Video gaming</li><li>Content management</li><li>E-commerce</li><li>All of the above</li></ol>
+  <div class="answer"><span class="hint">Hover for answer →</span><span class="reveal">✅ d) All of the above</span></div>
+</div>
+
+<div class="mcq">
+  <div class="q">Q8. A collection in MongoDB is:</div>
+  <ol class="opts"><li>A group of related documents</li><li>A group of databases</li><li>A group of schema</li><li>A group of rows</li></ol>
+  <div class="answer"><span class="hint">Hover for answer →</span><span class="reveal">✅ a) A group of related documents</span></div>
+</div>
+
+<div class="mcq">
+  <div class="q">Q9. In Spark, RDD stands for:</div>
+  <ol class="opts"><li>Rigid Distributed Dataset</li><li>Resilient Distributed Dataset</li><li>Realtime Distributed Dataset</li><li>Random Distributed Dataset</li></ol>
+  <div class="answer"><span class="hint">Hover for answer →</span><span class="reveal">✅ b) Resilient Distributed Dataset</span></div>
+</div>
+
+<div class="mcq">
+  <div class="q">Q10. The various ways a Spark RDD can be persisted:</div>
+  <ol class="opts"><li>Memory only</li><li>Memory only serialized</li><li>Memory and hard drive</li><li>All of the above</li></ol>
+  <div class="answer"><span class="hint">Hover for answer →</span><span class="reveal">✅ d) All of the above</span></div>
+</div>
+
+<p style="margin-top: 2rem;">Section B (2 marks each):</p>
+
+<div class="mcq">
+  <div class="q">Q1. Hive command to change table name from t1 to t2:</div>
+  <ol class="opts"><li>UPDATE TABLENAME FROM t1 to t2;</li><li>ALTER TABLE t1 RENAME TO t2;</li><li>RENAME TABLE FROM t1 to t2;</li><li>UPDATE TABLE t1 AS t2;</li></ol>
+  <div class="answer"><span class="hint">Hover for answer →</span><span class="reveal">✅ b) ALTER TABLE t1 RENAME TO t2;</span></div>
+</div>
+
+<div class="mcq">
+  <div class="q">Q2. MongoDB query to display users sorted by age ascending:</div>
+  <ol class="opts"><li>db.users.find().sort({age:1})</li><li>db.users.find().limit()</li><li>db.users.find()</li><li>db.users.find().sort(age:-1)</li></ol>
+  <div class="answer"><span class="hint">Hover for answer →</span><span class="reveal">✅ a) db.users.find().sort({age:1})</span></div>
+</div>
+
+<div class="mcq">
+  <div class="q">Q3. Correct syntax to copy file from local to HDFS:</div>
+  <ol class="opts"><li>hadoop fs -put &lt;local&gt; &lt;hdfs&gt;</li><li>hadoop fs -copyFromLocal &lt;hdfs&gt; &lt;local&gt;</li><li>hadoop fs -copy &lt;local&gt; &lt;hdfs&gt;</li><li>hadoop fs -move &lt;hdfs&gt; &lt;local&gt;</li></ol>
+  <div class="answer"><span class="hint">Hover for answer →</span><span class="reveal">✅ a) hadoop fs -put &lt;local_path&gt; &lt;hdfs_path&gt;</span></div>
+</div>
+
+<div class="mcq">
+  <div class="q">Q4. Rename column in PySpark DataFrame:</div>
+  <ol class="opts"><li>df.withColumnRenamed(existingName, newName)</li><li>df.withRenamed(existingName, newName)</li><li>df.withColumn(existingName, newName)</li><li>df.Renamed(existingName, newName)</li></ol>
+  <div class="answer"><span class="hint">Hover for answer →</span><span class="reveal">✅ a) df.withColumnRenamed(existingName, newName)</span></div>
+</div>
+
+<div class="mcq">
+  <div class="q">Q5. How to convert RDD into DataFrame in PySpark:</div>
+  <ol class="opts"><li>spark.createDataFrame(rdd, schema=Columns)</li><li>rdd.toDF(columns)</li><li>spark.convertDataFrame(rdd, schema=Columns)</li><li>A & B</li></ol>
+  <div class="answer"><span class="hint">Hover for answer →</span><span class="reveal">✅ d) A & B — both createDataFrame and toDF work</span></div>
+</div>
+
+<!-- ======================================================================== -->
+<!--  SECTION 8: PAST PAPER ANALYSIS                                         -->
+<!-- ======================================================================== -->
+<div class="section-divider" id="past-papers"><span class="num">08</span></div>
+<h2>Past Paper Analysis</h2>
+
+<h3>Section A Theory Questions — Frequency</h3>
+<table>
+  <tr><th>Topic</th><th>Times Asked</th><th>Papers</th></tr>
+  <tr><td>Spark Architecture</td><td>5/5</td><td>All papers</td></tr>
+  <tr><td>CAP Theorem + MongoDB position</td><td>4/5</td><td>Mar'22, Apr'22, Jun'25(both)</td></tr>
+  <tr><td>HDFS Architecture (NameNode/DataNode)</td><td>3/5</td><td>Jun'25(15th), others</td></tr>
+  <tr><td>Hive Architecture</td><td>2/5</td><td>Jun'25</td></tr>
+  <tr><td>DAG in Spark</td><td>2/5</td><td>Jun'25(15th), Jul'24</td></tr>
+  <tr><td>MapReduce explanation</td><td>2/5</td><td>Mar'22, others</td></tr>
+  <tr><td>YARN components</td><td>1/5</td><td>Jun'25(15th)</td></tr>
+  <tr><td>Partitioning in Hive</td><td>1/5</td><td>Jul'24</td></tr>
+  <tr><td>Coalesce vs Repartition</td><td>1/5</td><td>Jul'24</td></tr>
+  <tr><td>Data Lake vs Data Warehouse</td><td>1/5</td><td>Jul'24</td></tr>
+  <tr><td>HBase vs RDBMS</td><td>1/5</td><td>Jun'25(15th)</td></tr>
+  <tr><td>Bucketing in Hive</td><td>1/5</td><td>Apr'22</td></tr>
+</table>
+
+<h3>Section C Coding — Model Pattern</h3>
+<table>
+  <tr><th>Paper</th><th>Part A (15m)</th><th>Part B (25m) — ML Model</th></tr>
+  <tr><td>Jun 2025 (15th)</td><td>Min/max/avg balance, groupBy job, filter age+loan</td><td><strong>LogisticRegression</strong> → Accuracy</td></tr>
+  <tr><td>Jun 2025</td><td>Min/max/avg profit, groupBy state, filter</td><td><strong>LinearRegression</strong> → MSE + RMSE</td></tr>
+  <tr><td>Jul 2024</td><td>Count institutions, filter India, avg citations</td><td><strong>LinearRegression</strong> → RMSE</td></tr>
+  <tr><td>Apr 2022</td><td>Record count, missing values, describe, correlation</td><td><strong>LinearRegression</strong> → RMSE</td></tr>
+  <tr><td>Mar 2022</td><td>Count from location, filter BHK+location, avg price</td><td><strong>LinearRegression</strong> → train only</td></tr>
+</table>
+
+<!-- ======================================================================== -->
+<!--  SECTION 9: SECTION C TEMPLATE                                          -->
+<!-- ======================================================================== -->
+<div class="section-divider" id="coding-template"><span class="num">09</span></div>
+<h2>Section C — Complete Code Template</h2>
+
+<div class="concept-card success">
+  <h5>💡 Use this as your starting template for every ESA Section C</h5>
+  <p>This template covers the full pipeline that appears in every past paper. Just change the dataset name and column names.</p>
+</div>
+
+<h3>Part A: PySpark DataFrame / SparkSQL Queries (15 marks)</h3>
+<pre><code><span class="lang-tag">PySpark</span>
+# === SETUP ===
+from pyspark.context import SparkContext
+from pyspark.sql.session import SparkSession
+from pyspark.sql.functions import isnull, when, count, col, avg, min, max, sum
+
+sc = SparkContext.getOrCreate()
+spark = SparkSession(sc)
+
+# === READ DATA ===
+rawDF = spark.read.format("csv") \
+    .option("inferSchema", True) \
+    .option("header", True) \
+    .option("sep", ",") \
+    .load("dataset.csv")
+
+rawDF.show(5, False)
+rawDF.printSchema()
+
+# === Q: Count rows and columns ===
+print("Rows:", rawDF.count())
+print("Columns:", len(rawDF.columns))
+
+# === Q: Check missing values ===
+rawDF.select([count(when(isnull(c), c)).alias(c) for c in rawDF.columns]).show()
+
+# === Q: Drop nulls ===
+rawDF = rawDF.na.drop()
+
+# === Q: Drop a column ===
+rawDF = rawDF.drop("unnecessary_column")
+
+# === Q: Show schema ===
+rawDF.printSchema()
+
+# === Q: Summary statistics ===
+rawDF.describe().show()
+
+# === Q: Min, Max, Average of a column ===
+rawDF.select(
+    min("account_balance").alias("Min"),
+    max("account_balance").alias("Max"),
+    avg("account_balance").alias("Avg")
+).show()
+
+# === Q: GroupBy and count ===
+rawDF.groupBy("job_type").count().orderBy("count", ascending=False).show()
+
+# === Q: Filter with multiple conditions ===
+rawDF.filter((col("age") > 60) & (col("loan") == "yes")).count()
+
+# === Q: GroupBy with aggregation ===
+rawDF.groupBy("education").agg(count("*").alias("count")) \
+    .filter(col("deposit") == "yes").show()
+
+# === Q: Cross-tabulation ===
+rawDF.groupBy("marital_status", "deposit").count().show()
+
+# === Q: Correlation ===
+print("Correlation:", rawDF.stat.corr("Total_Benefits", "Total_Compensation"))
+
+# === SparkSQL alternative ===
+rawDF.createOrReplaceTempView("data")
+spark.sql("SELECT job_type, COUNT(*) as cnt FROM data GROUP BY job_type ORDER BY cnt DESC").show()
+</code></pre>
+
+<h3>Part B: Spark ML Pipeline (25 marks)</h3>
+<pre><code><span class="lang-tag">PySpark ML</span>
+# === IMPORTS ===
+from pyspark.ml.feature import StringIndexer, VectorAssembler
+from pyspark.ml.classification import LogisticRegression      # For classification
+from pyspark.ml.regression import LinearRegression             # For regression
+from pyspark.ml.evaluation import BinaryClassificationEvaluator, MulticlassClassificationEvaluator
+from pyspark.ml.evaluation import RegressionEvaluator
+
+# === STEP 1: StringIndexer — Convert ALL string columns to numeric (5 marks) ===
+# Identify string columns
+string_cols = [f.name for f in rawDF.schema.fields if str(f.dataType) == 'StringType()']
+print("String columns:", string_cols)
+
+# Create indexed column names
+indexed_cols = [c + '_indexed' for c in string_cols]
+
+# Special handling: rename target indexed column to 'label'
+# If target is 'deposit': replace 'deposit_indexed' with 'label'
+target_col = 'deposit'  # CHANGE THIS per exam
+output_cols = ['label' if c == target_col + '_indexed' else c for c in indexed_cols]
+
+indexers = StringIndexer(
+    inputCols=string_cols,
+    outputCols=output_cols
+)
+df = indexers.fit(rawDF).transform(rawDF)
+
+# Drop original string columns
+df = df.drop(*string_cols)
+
+# Verify no string columns
+df.printSchema()
+
+# === STEP 2: VectorAssembler — Combine features (5 marks) ===
+feature_cols = [c for c in df.columns if c != 'label']
+assembler = VectorAssembler(inputCols=feature_cols, outputCol="features")
+df = assembler.transform(df)
+
+# Keep only features and label
+df = df.select("features", "label")
+df.show(5, False)
+
+# === STEP 3: Train-Test Split (3 marks) ===
+trainDF, testDF = df.randomSplit([0.75, 0.25], seed=2020)
+print("Training:", trainDF.count())
+print("Testing:", testDF.count())
+
+# === STEP 4: Build Model (6 marks) ===
+
+# --- FOR CLASSIFICATION (LogisticRegression) ---
+lr = LogisticRegression(featuresCol="features", labelCol="label")
+model = lr.fit(trainDF)
+
+# --- FOR REGRESSION (LinearRegression) ---
+# lr = LinearRegression(featuresCol="features", labelCol="label")
+# model = lr.fit(trainDF)
+
+# === STEP 5: Predict and Evaluate (6 marks) ===
+predictionDF = model.transform(testDF)
+predictionDF.select("label", "prediction", "probability").show(10, False)
+
+# --- Classification Accuracy ---
+accuracy = predictionDF.filter(
+    predictionDF.label == predictionDF.prediction
+).count() / float(predictionDF.count())
+print("Accuracy =", accuracy)
+
+# --- AUC-ROC ---
+evaluator = BinaryClassificationEvaluator()
+print("AUC-ROC =", evaluator.evaluate(predictionDF))
+
+# --- Regression RMSE ---
+# reg_evaluator = RegressionEvaluator(
+#     labelCol="label", predictionCol="prediction", metricName="rmse"
+# )
+# print("RMSE =", reg_evaluator.evaluate(predictionDF))
+
+# --- Regression MSE ---
+# reg_evaluator_mse = RegressionEvaluator(
+#     labelCol="label", predictionCol="prediction", metricName="mse"
+# )
+# print("MSE =", reg_evaluator_mse.evaluate(predictionDF))
+</code></pre>
+
+<!-- ======================================================================== -->
+<!--  SECTION 10: QUICK CHEATSHEET                                           -->
+<!-- ======================================================================== -->
+<div class="section-divider" id="cheatsheet"><span class="num">10</span></div>
+<h2>Quick Cheatsheet</h2>
+
+<h3>HDFS Commands — One-Liners</h3>
+<table>
+  <tr><th>Operation</th><th>Command</th></tr>
+  <tr><td>Create dir</td><td><code>hadoop fs -mkdir /path</code></td></tr>
+  <tr><td>Nested dir</td><td><code>hadoop fs -mkdir -p /a/b/c</code></td></tr>
+  <tr><td>Upload file</td><td><code>hadoop fs -put local.txt /hdfs/</code></td></tr>
+  <tr><td>Download file</td><td><code>hadoop fs -get /hdfs/f.txt /local/</code></td></tr>
+  <tr><td>List files</td><td><code>hadoop fs -ls /path</code></td></tr>
+  <tr><td>List recursive</td><td><code>hadoop fs -ls -R /path</code></td></tr>
+  <tr><td>Cat file</td><td><code>hadoop fs -cat /path/file.txt</code></td></tr>
+  <tr><td>Head (first lines)</td><td><code>hadoop fs -cat file | head -n 10</code></td></tr>
+  <tr><td>Copy in HDFS</td><td><code>hadoop fs -cp /src /dst</code></td></tr>
+  <tr><td>Move in HDFS</td><td><code>hadoop fs -mv /src /dst</code></td></tr>
+  <tr><td>Remove file</td><td><code>hadoop fs -rm /path/file</code></td></tr>
+  <tr><td>Remove dir</td><td><code>hadoop fs -rm -r /path/dir</code></td></tr>
+  <tr><td>Permissions</td><td><code>hadoop fs -chmod 444 file</code></td></tr>
+  <tr><td>Disk usage</td><td><code>hadoop fs -du -s /path</code></td></tr>
+  <tr><td>Version</td><td><code>hadoop version</code></td></tr>
+</table>
+
+<h3>MongoDB — One-Liners</h3>
+<table>
+  <tr><th>Operation</th><th>Command</th></tr>
+  <tr><td>Create collection</td><td><code>db.createCollection("name")</code></td></tr>
+  <tr><td>Insert one</td><td><code>db.col.insertOne({...})</code></td></tr>
+  <tr><td>Insert many</td><td><code>db.col.insertMany([{...}, {...}])</code></td></tr>
+  <tr><td>Find all</td><td><code>db.col.find()</code></td></tr>
+  <tr><td>Find with filter</td><td><code>db.col.find({"key": "val"})</code></td></tr>
+  <tr><td>Find with $gt</td><td><code>db.col.find({"price": {"$gt": 100}})</code></td></tr>
+  <tr><td>Find with $or</td><td><code>db.col.find({"$or": [{...}, {...}]})</code></td></tr>
+  <tr><td>Sort ascending</td><td><code>db.col.find().sort({age: 1})</code></td></tr>
+  <tr><td>Projection</td><td><code>db.col.find({}, {"name": 1, "_id": 0})</code></td></tr>
+  <tr><td>Update many</td><td><code>db.col.updateMany({filter}, {"$set": {}})</code></td></tr>
+  <tr><td>Increment</td><td><code>db.col.updateMany({}, {"$inc": {"qty": -10}})</code></td></tr>
+  <tr><td>Delete one</td><td><code>db.col.deleteOne({"name": "X"})</code></td></tr>
+  <tr><td>Delete many</td><td><code>db.col.deleteMany({"qty": {"$lt": 15}})</code></td></tr>
+  <tr><td>Count</td><td><code>db.col.countDocuments({"rating": 5})</code></td></tr>
+</table>
+
+<h3>PySpark — Critical Imports</h3>
+<pre><code><span class="lang-tag">PySpark</span>
+# Core
+from pyspark.context import SparkContext
+from pyspark.sql.session import SparkSession
+from pyspark.sql.functions import col, lit, when, isnull, count, avg, sum, min, max, expr
+from pyspark.sql.types import StructType, StructField, StringType, IntegerType, FloatType, DoubleType
+
+# ML Feature Engineering
+from pyspark.ml.feature import StringIndexer, VectorAssembler
+from pyspark.ml.feature import Binarizer, Bucketizer, OneHotEncoder
+from pyspark.ml.feature import StandardScaler, MinMaxScaler, Normalizer
+
+# ML Models
+from pyspark.ml.classification import LogisticRegression, DecisionTreeClassifier, RandomForestClassifier
+from pyspark.ml.regression import LinearRegression
+
+# ML Evaluation
+from pyspark.ml.evaluation import BinaryClassificationEvaluator
+from pyspark.ml.evaluation import MulticlassClassificationEvaluator
+from pyspark.ml.evaluation import RegressionEvaluator
+
+# Pipeline
+from pyspark.ml import Pipeline, PipelineModel
+</code></pre>
+
+<h3>Key Facts to Memorize</h3>
+<div class="concept-card success">
+  <h5>✅ Quick Recall</h5>
+  <ul>
+    <li><strong>Hadoop versions:</strong> Three (1, 2, 3)</li>
+    <li><strong>HDFS default block size:</strong> 128 MB</li>
+    <li><strong>Default replication factor:</strong> 3</li>
+    <li><strong>Default Hive metastore:</strong> Derby</li>
+    <li><strong>Hive execution engines:</strong> MapReduce, Spark, TEZ (any)</li>
+    <li><strong>MongoDB = CP</strong> in CAP theorem</li>
+    <li><strong>RDD =</strong> Resilient Distributed Dataset</li>
+    <li><strong>ZooKeeper port:</strong> 2181 | <strong>Kafka port:</strong> 9092</li>
+    <li><strong>Coalesce:</strong> decrease partitions (no shuffle) | <strong>Repartition:</strong> increase/decrease (full shuffle)</li>
+    <li><strong>Managed table drop:</strong> deletes data | <strong>External table drop:</strong> data stays</li>
+    <li><strong>Parquet/ORC:</strong> columnar | <strong>Text/CSV/JSON:</strong> row-based</li>
+    <li><strong>df.withColumnRenamed(old, new)</strong> — rename column</li>
+    <li><strong>rdd.toDF(cols)</strong> or <strong>spark.createDataFrame(rdd, schema)</strong> — RDD→DF</li>
+    <li><strong>StringIndexer:</strong> most frequent label → index 0</li>
+  </ul>
+</div>
+
+<div style="text-align: center; padding: 4rem 0 2rem; color: var(--text-muted); font-family: var(--mono); font-size: 0.8rem;">
+  — Good luck on your ESA! 🎯 —<br>
+  Generated from course materials: slides, notebooks, past papers, assignments, and handson exercises.
+</div>
+
+</main>
+
+<script>
+// Smooth scroll for sidebar links
+document.querySelectorAll('#sidebar a').forEach(link => {
+  link.addEventListener('click', (e) => {
+    if (window.innerWidth <= 900) {
+      document.getElementById('sidebar').classList.remove('show');
+    }
+  });
+});
+
+// Active link tracking
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      document.querySelectorAll('#sidebar a').forEach(a => a.classList.remove('active'));
+      const activeLink = document.querySelector(`#sidebar a[href="#${id}"]`);
+      if (activeLink) activeLink.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -80% 0px' });
+
+document.querySelectorAll('[id]').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
